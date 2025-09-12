@@ -11,13 +11,13 @@
 
 ### Маршруты
 - api/v1/session
-  - **post**                api/v1/session/
-  - **web socket**          api/v1/session/ws
+  - **post**              api/v1/session/
+  - **web socket**        api/v1/session/ws
   - **get**        *secure* api/v1/session/{id}
   - **patch**      *secure* api/v1/session/{id}
   - **delete**     *secure* api/v1/session/{id}
 - api/v1/offer
-  - *post*            api/v1/offer/
+  - *post*          api/v1/offer/
   - *get*    *secure* api/v1/offer/{id}
   - *delete* *secure* api/v1/offer/{id}
 - api/v1/admin
