@@ -1,0 +1,155 @@
+### 
+
+@baseUrl = localhost:7080
+@httpUrl = http://{{baseUrl}}
+@wsUrl = ws://{{baseUrl}}
+
+### 
+
+GET {{httpUrl}}/ HTTP/1.1
+Cookie: session={{session}}
+
+> {%
+  -- lua
+  client.global.session = response.cookies["session"].value
+	client.log(client.global.session)
+%}
+
+
+### SESSION ##############################
+
+@sessionId = 71f03234-b48a-4634-8ed1-cf74f41414a3
+
+
+### Get all sessions
+
+GET {{httpUrl}}/api/v1/session HTTP/1.1
+Cookie: auth={{token}}
+
+
+### Get session by id
+
+GET {{httpUrl}}/api/v1/session/{{sessionId}} HTTP/1.1
+Cookie: auth={{token}}
+
+
+### Create session
+
+POST {{httpUrl}}/api/v1/session HTTP/1.1
+Cookie: session={{session}}
+
+> {%
+  -- lua
+  client.global.session = response.cookies["session"].value
+	client.log(client.global.session)
+%}
+
+
+### Delete session
+
+DELETE {{httpUrl}}/api/v1/session/{{sessionId}} HTTP/1.1
+Cookie: auth={{token}}
+
+
+### ALIAS ##############################
+
+@aliasId = 25c84543-3713-4ca9-ba71-ded92ef47aa6
+
+
+### Get all aliases
+
+GET {{httpUrl}}/api/v1/alias HTTP/1.1
+Cookie: auth={{token}}
+
+
+### Create alias
+
+POST {{httpUrl}}/api/v1/alias HTTP/1.1
+Cookie: auth={{token}}
+Content-Type: application/json
+
+{
+  "tag": "Welcome",
+  "alias": "MegaComany"
+}
+
+
+### Delete alias
+
+DELETE {{httpUrl}}/api/v1/alias/{{aliasId}} HTTP/1.1
+Cookie: auth={{token}}
+
+
+### TIME_INTERVAL ##############################
+
+@timeIntervalId = 7453a185-fdbc-4d17-ae37-5707c5b94a99
+@timeIntervalSessionId = 8b7691b2-afaa-4890-a8bd-08efe255bdf4
+@date = 2025-10-01
+
+
+### Get all time intervals
+
+GET {{httpUrl}}/api/v1/time_interval HTTP/1.1
+Cookie: auth={{token}}
+
+
+### Get by time interval by id
+
+GET {{httpUrl}}/api/v1/time_interval/{{timeIntervalId}} HTTP/1.1
+Cookie: auth={{token}}
+
+
+### Get by time interval by session id
+
+GET {{httpUrl}}/api/v1/time_interval/session/{{timeIntervalSessionId}} HTTP/1.1
+Cookie: auth={{token}}
+
+
+### Get by time interval by session id and date
+
+GET {{httpUrl}}/api/v1/time_interval/session/{{timeIntervalSessionId}}/{{date}} HTTP/1.1
+Cookie: auth={{token}}
+
+
+### Delete session
+
+DELETE {{httpUrl}}/api/v1/time_interval/{{timeIntervalId}} HTTP/1.1
+Cookie: auth={{token}}
+
+
+### AUTH ##############################
+
+
+### Register
+
+POST {{httpUrl}}/api/v1/auth/register HTTP/1.1
+Content-Type: application/json
+Cookie: session={{session}}
+
+{
+  "email": "areg@mail.ru",
+  "password": "123"
+}
+
+
+### Signin
+
+POST {{httpUrl}}/api/v1/auth/signin HTTP/1.1
+Content-Type: application/json
+Cookie: session={{session}}
+
+{
+  "email": "areg@mail.ru",
+  "password": "123"
+}
+
+> {%
+  -- lua
+  client.global.token = response.cookies["auth"].value
+%}
+
+
+### ANALITICS ##############################
+
+WS ws://localhost:4000/api/v1/analitics/ws HTTP/1.1
+Cookie: session=15edb0a2-9da7-4d97-8bb1-0afdbd81184a

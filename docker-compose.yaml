@@ -1,0 +1,67 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    ports:
+      - 127.0.0.1:4000:4000
+    volumes:
+      - ./backend/:/usr/src/app
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      database:
+        condition: service_healthy
+    environment:
+      TOKEN_LIFETIME: ${TOKEN_LIFETIME}
+      JWT_PRIVATE_KEY: ${JWT_PRIVATE_KEY}
+      JWT_PUBLIC_KEY: ${JWT_PUBLIC_KEY}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+      DB_PORT: 5432
+      DB_HOST: database 
+      DB_SSL: ""
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./frontend/:/usr/src/app
+    ports:
+      - 127.0.0.1:3000:3000
+
+  database:
+    image: postgres:17.4-alpine3.21
+    restart: unless-stopped
+    healthcheck:
+        test: [ "CMD", "pg_isready", "-U", "${DB_USER}", "-d", "${DB_NAME}" ]
+        interval: 1s
+        timeout: 1s
+        retries: 60
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - 127.0.0.1:5432:5432
+    volumes:
+      - database-data:/var/lib/postgresql/data
+
+  migrate:
+    image: migrate/migrate
+    command: ["-source=file://migrations", "-database",  "postgres://test:test@database:5432/test_db?sslmode=disable", "up"]
+    restart: on-failure
+    volumes:
+      - ./backend/migrations:/migrations
+    depends_on:
+      database:
+        condition: service_healthy
+
+volumes:
+  app:
+  database-data:
+  redis_volume:
+  minio-storage:
+  minio-config:
