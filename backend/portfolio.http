@@ -1,6 +1,7 @@
 ### 
 
-@baseUrl = localhost:7080
+##@baseUrl = localhost:7080
+@baseUrl = areg-kr.com:7080
 @httpUrl = http://{{baseUrl}}
 @wsUrl = ws://{{baseUrl}}
 

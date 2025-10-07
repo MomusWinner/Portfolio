@@ -6,6 +6,7 @@ create table portfolio.session(
 	id         uuid primary key default uuid_generate_v4(),
 	tag        varchar(500),
 	ip         varchar(32) not null,
+	device     varchar(100) not null,
 	created_at timestamp not null default now()
 );
 

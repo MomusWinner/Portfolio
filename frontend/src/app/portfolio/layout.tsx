@@ -6,53 +6,50 @@ import PhaserGame from "@/components/GameOfLifeWrapper";
 // import Head from "next/head";
 //
 
-
 const robotoMono = Roboto_Mono({
-	variable: "--font-roboto-mono",
-	subsets: ["cyrillic"],
+  variable: "--font-roboto-mono",
+  subsets: ["cyrillic"],
 });
 
 export const metadata: Metadata = {
-	title: "Krdyan Areg",
-	description: "Porfolio",
+  title: "Krdyan Areg",
+  description: "Porfolio",
 };
 
 export default async function RootLayout({
-	children,
+  children,
 }: Readonly<{
-	children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-	const h = await headers();
-	const userAgent = h.get("user-agent") || "";
+  const h = await headers();
+  const userAgent = h.get("user-agent") || "";
 
-	const isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(userAgent);
+  const isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(userAgent);
 
-	return (
-		<html lang="ru">
-			<body
-				className={`${robotoMono.variable} antialiased bg-background-dark`}
-			>
-				{
-					isMobile ? <></> :
-						<div className="absolute top-0 left-1/2 -translate-x-1/2 -z-11">
-							<PhaserGame />
-						</div>
-				}
+  return (
+    <html lang="ru">
+      <body className={`${robotoMono.variable} antialiased bg-background-dark`}>
+        {isMobile ? (
+          <></>
+        ) : (
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 -z-11">
+            <PhaserGame />
+          </div>
+        )}
 
-				{
-					isMobile ?
-						<main className="p-[24px] bg-background text-sm">{children}</main>
-						:
-						<main className="relative max-w-5xl mx-auto p-6 md:p-12 space-y-12">
-							<div className="h-60"></div>
-							<div className="p-15 rounded-2xl shadow-xl/30 bg-background inset-0 -z-10">
-								{children}
-							</div>
-						</main>
-				}
-			</body>
-		</html >
-	);
+        {isMobile ? (
+          <main className="p-[24px] bg-background text-sm">{children}</main>
+        ) : (
+          <main className="relative max-w-5xl mx-auto p-6 md:p-12 space-y-12">
+            <div className="h-60"></div>
+            <div className="p-15 rounded-2xl shadow-xl/30 bg-background inset-0 -z-10">
+              {children}
+            </div>
+          </main>
+        )}
+      </body>
+    </html>
+  );
 }
 
 // <div className="font-mono grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 md:p-40 lg:p-70 pb-20 gap-16 ">

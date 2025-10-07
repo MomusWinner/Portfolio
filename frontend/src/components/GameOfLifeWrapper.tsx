@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
 // import GameOfLife from '@/components/GameOfLife';
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 
 const HorizontalModule = dynamic(
-	() => import('@/components/GameOfLife').then((mod) => mod.default),
-	{
-		ssr: false,
-		// suspense: true,
-		loading: () => <p>. . .</p>
-	}
-)
+  () => import("@/components/GameOfLife").then((mod) => mod.default),
+  {
+    ssr: false,
+    // suspense: true,
+    loading: () => <p>. . .</p>,
+  }
+);
 
 export default function PortfolioGameWrapper() {
-	return <HorizontalModule />;
+  return <HorizontalModule />;
 }

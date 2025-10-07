@@ -6,14 +6,14 @@
   /* --background: #232424; */
   /* --foreground: #f0f6f0; */
 
-  --background:  #222323;
-  --background-dark:  #1b1c1c;
+  --background: #222323;
+  --background-dark: #1b1c1c;
 
   --foreground: #f0f6f0;
 
   --gray: #808080;
   --red: #b33831;
-  --green: #1ebc73 ;
+  --green: #1ebc73;
 }
 
 @theme inline {

@@ -1,15 +1,15 @@
-import { Scene } from 'phaser';
+import { Scene } from "phaser";
 
 export class Boot extends Scene {
-	constructor() {
-		super('Boot');
-	}
+  constructor() {
+    super("Boot");
+  }
 
-	preload() {
-		this.load.image('cell', '/asset/cell.png');
-	}
+  preload() {
+    this.load.image("cell", "/asset/cell.png");
+  }
 
-	create() {
-		this.scene.start('Game');
-	}
+  create() {
+    this.scene.start("Game");
+  }
 }

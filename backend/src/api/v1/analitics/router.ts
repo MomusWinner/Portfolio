@@ -1,13 +1,14 @@
-import { SessionMiddleware } from "../../../middleware/middleware";
+import { SessionMiddleware } from "@/middleware/middleware";
 import { AnaliticsHandler } from "./handler";
-import { Hono } from 'hono'
+import { Hono } from "hono";
 
-export function addAnalicitcsRoutes(analiticsHandler: AnaliticsHandler, sessionMiddleware: SessionMiddleware): Hono {
-	const app = new Hono()
+export function addAnalicitcsRoutes(
+  analiticsHandler: AnaliticsHandler,
+  sessionMiddleware: SessionMiddleware
+): Hono {
+  const app = new Hono();
 
-	app.get('/ws', sessionMiddleware.handle(), analiticsHandler.getAnaliticsWebSocket())
-	// app.get('/', authMiddleware.handle(), analiticsHandler.getAllSessionHandle())
-	// app.delete('/:id', authMiddleware.handle(), analiticsHandler.deleteSessionByIdHandle())
+  app.get("/ws", sessionMiddleware.handle(), analiticsHandler.getAnaliticsWebSocket());
 
-	return app
+  return app;
 }

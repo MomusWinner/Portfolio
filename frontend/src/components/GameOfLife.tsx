@@ -1,61 +1,70 @@
-"use client"
+"use client";
 
-import { forwardRef, useEffect, useLayoutEffect, useRef } from 'react';
-import StartGame from '../game/main';
-import { EventBus } from '../game/EventBus';
+import { forwardRef, useEffect, useLayoutEffect, useRef } from "react";
+import StartGame from "../game/main";
+import { EventBus } from "../game/EventBus";
 
 export interface IRefPhaserGame {
-	game: Phaser.Game | null;
-	scene: Phaser.Scene | null;
+  game: Phaser.Game | null;
+  scene: Phaser.Scene | null;
 }
 
 interface IProps {
-	currentActiveScene?: (scene_instance: Phaser.Scene) => void
+  currentActiveScene?: (scene_instance: Phaser.Scene) => void;
 }
 
 export default forwardRef<IRefPhaserGame, IProps>(function PhaserGame({ currentActiveScene }, ref) {
-	const game = useRef<Phaser.Game | null>(null!);
+  const game = useRef<Phaser.Game | null>(null!);
 
-	useLayoutEffect(() => {
-		if (game.current === null) {
-			game.current = StartGame("game-container");
+  useLayoutEffect(() => {
+    if (game.current === null) {
+      game.current = StartGame("game-container");
 
-			if (typeof ref === 'function') {
-				ref({ game: game.current, scene: null });
-			} else if (ref) {
-				ref.current = { game: game.current, scene: null };
-			}
-		}
+      if (typeof ref === "function") {
+        ref({ game: game.current, scene: null });
+      } else if (ref) {
+        ref.current = { game: game.current, scene: null };
+      }
+    }
 
-		return () => {
-			if (game.current) {
-				game.current.destroy(true);
-				if (game.current !== null) {
-					game.current = null;
-				}
-			}
-		}
-	}, [ref]);
+    const resize = () => {
+      if (game.current) {
+        const width = Math.min(window.innerWidth, 1880);
 
-	useEffect(() => {
-		EventBus.on('current-scene-ready', (scene_instance: Phaser.Scene) => {
-			if (currentActiveScene && typeof currentActiveScene === 'function') {
-				currentActiveScene(scene_instance);
-			}
+        game.current.scale.resize(width, 2700);
+      }
+    };
 
-			if (typeof ref === 'function') {
-				ref({ game: game.current, scene: scene_instance });
-			} else if (ref) {
-				ref.current = { game: game.current, scene: scene_instance };
-			}
-		});
+    window.addEventListener("resize", resize);
 
-		return () => {
-			EventBus.removeListener('current-scene-ready');
-		}
-	}, [currentActiveScene, ref]);
+    return () => {
+      window.removeEventListener("resize", resize);
+      if (game.current) {
+        game.current.destroy(true);
+        if (game.current !== null) {
+          game.current = null;
+        }
+      }
+    };
+  }, [ref]);
 
-	return (
-		<div id="game-container"></div>
-	);
+  useEffect(() => {
+    EventBus.on("current-scene-ready", (scene_instance: Phaser.Scene) => {
+      if (currentActiveScene && typeof currentActiveScene === "function") {
+        currentActiveScene(scene_instance);
+      }
+
+      if (typeof ref === "function") {
+        ref({ game: game.current, scene: scene_instance });
+      } else if (ref) {
+        ref.current = { game: game.current, scene: scene_instance };
+      }
+    });
+
+    return () => {
+      EventBus.removeListener("current-scene-ready");
+    };
+  }, [currentActiveScene, ref]);
+
+  return <div id="game-container"></div>;
 });
