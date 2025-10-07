@@ -1,5 +1,5 @@
 import { logger } from 'hono/logger'
-import { Fronted } from './frontend/index'
+import { hashPassword } from './helpers/helper';
 import { load_config, Config } from './config'
 import { connect } from './repository/connection'
 import { SessionRepository } from './repository/session'
@@ -41,6 +41,23 @@ const analitics = new AnaliticsHandler(analiticsRepo)
 const timeIntervalHander = new TimeIntervalHandler(analiticsRepo)
 
 const aliasHandler = new AliasHandler(analiticsRepo)
+
+if (config.adminEmail) {
+	if (!config.adminPassword) {
+		throw new Error("Admin password shouldn't be empty. Please change the ADMIN_PASS.")
+
+	}
+	adminRepo.getAdminByEmail(config.adminEmail).then(async (admin) => {
+		if (!admin) {
+			const pass = await hashPassword(config.adminPassword)
+			await adminRepo.createAdmin(config.adminEmail, pass)
+			console.log("Create default admin. Email: " + config.adminEmail)
+		}
+	}).catch((reason) => {
+		console.log("Couldn't create default admin")
+		console.log(reason)
+	})
+}
 
 app.use(logger());
 app.route('/api/v1/session', addSessionRoutes(sesssionHandler, authMiddleware, sessionMiddleware))

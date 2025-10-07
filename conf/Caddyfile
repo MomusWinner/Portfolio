@@ -1,6 +1,4 @@
-:7080
-
-reverse_proxy /api/* backend:4000
-
-reverse_proxy frontend:3000
-
+:7080 {
+	reverse_proxy /api/* backend:4000
+	reverse_proxy frontend:3000
+}

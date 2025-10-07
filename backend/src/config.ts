@@ -8,6 +8,8 @@ export interface Config {
 	tokenLifeTime: number,
 	jwtPublicKey: string,
 	jwtPrivateKey: string,
+	adminEmail: string,
+	adminPassword: string,
 }
 
 export function load_config(): Config {
@@ -21,5 +23,7 @@ export function load_config(): Config {
 		tokenLifeTime: Number(Bun.env.TOKEN_LIFETIME),
 		jwtPublicKey: Bun.env.JWT_PUBLIC_KEY ?? "null",
 		jwtPrivateKey: Bun.env.JWT_PUBLIC_KEY ?? "null",
+		adminEmail: Bun.env.ADMIN_EMAIL ?? "null",
+		adminPassword: Bun.env.ADMIN_PASS ?? "null",
 	}
 }

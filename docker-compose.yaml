@@ -13,6 +13,8 @@ services:
       database:
         condition: service_healthy
     environment:
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASS: ${ADMIN_PASS}
       TOKEN_LIFETIME: ${TOKEN_LIFETIME}
       JWT_PRIVATE_KEY: ${JWT_PRIVATE_KEY}
       JWT_PUBLIC_KEY: ${JWT_PUBLIC_KEY}
@@ -60,12 +62,8 @@ services:
 
   caddy:
     image: caddy:2.10.2
-    # restart: unless-stopped
     ports:
       - "7080:7080"
-      # - "80:80"
-      # - "7443:443"
-      # - "7443:443/udp"
     volumes:
       - ./conf:/etc/caddy
       - caddy_data:/data
