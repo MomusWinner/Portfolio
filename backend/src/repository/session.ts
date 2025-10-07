@@ -5,6 +5,7 @@ interface Session {
 	id: string;
 	tag: string | null;
 	ip: string;
+	device: string;
 	createdAt: Date;
 	alias?: string | null;
 	totalTime?: string | null;
@@ -17,8 +18,8 @@ export class SessionRepository {
 		this.sql = sql;
 	}
 
-	async createSession(ip: string, tag: string | null): Promise<Session | null> {
-		let session = await createSession(this.sql, { ip: ip, tag: tag });
+	async createSession(ip: string, device: string, tag: string | null): Promise<Session | null> {
+		let session = await createSession(this.sql, { ip: ip, tag: tag, device });
 		return session;
 	}
 

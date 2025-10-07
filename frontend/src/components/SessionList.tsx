@@ -3,16 +3,8 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import DeleteButton from './DeleteButton';
+import { Session } from '@/models';
 
-
-interface Session {
-	id: string;
-	tag: string | null;
-	ip: string;
-	createdAt: string;
-	alias?: string | null;
-	totalTime?: string | null;
-}
 
 type SessionItmeProps = {
 	session: Session

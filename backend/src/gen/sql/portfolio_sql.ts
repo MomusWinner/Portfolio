@@ -2,7 +2,7 @@ import { Sql } from "postgres";
 
 export const getSessionsByIDQuery = `-- name: GetSessionsByID :one
 
-select s.id, s.tag, s.ip, s.created_at, tta.alias from portfolio.session s
+select s.id, s.tag, s.ip, s.device, s.created_at, tta.alias from portfolio.session s
 left join portfolio.tag_to_alias tta on s.tag = tta.tag
 where s.id = $1`;
 
@@ -14,6 +14,7 @@ export interface GetSessionsByIDRow {
     id: string;
     tag: string | null;
     ip: string;
+    device: string;
     createdAt: Date;
     alias: string | null;
 }
@@ -28,8 +29,9 @@ export async function getSessionsByID(sql: Sql, args: GetSessionsByIDArgs): Prom
         id: row[0],
         tag: row[1],
         ip: row[2],
-        createdAt: row[3],
-        alias: row[4]
+        device: row[3],
+        createdAt: row[4],
+        alias: row[5]
     };
 }
 
@@ -38,19 +40,21 @@ select
 	s.id,
 	s.tag,
 	s.ip,
+	s.device,
 	s.created_at,
 	tta.alias,
 	coalesce(sum(t.t_end - t.t_start), interval '0') as total_time
 from portfolio.session s
 left join portfolio.time_interval t on t.session_id = s.id
 left join portfolio.tag_to_alias tta on s.tag = tta.tag
-group by s.id, s.tag, s.ip, s.created_at, tta.alias
+group by s.id, s.tag, s.device, s.ip, s.created_at, tta.alias
 order by created_at desc`;
 
 export interface GetAllSessionsRow {
     id: string;
     tag: string | null;
     ip: string;
+    device: string;
     createdAt: Date;
     alias: string | null;
     totalTime: string | null;
@@ -61,31 +65,34 @@ export async function getAllSessions(sql: Sql): Promise<GetAllSessionsRow[]> {
         id: row[0],
         tag: row[1],
         ip: row[2],
-        createdAt: row[3],
-        alias: row[4],
-        totalTime: row[5]
+        device: row[3],
+        createdAt: row[4],
+        alias: row[5],
+        totalTime: row[6]
     }));
 }
 
 export const createSessionQuery = `-- name: CreateSession :one
-insert into portfolio.session(tag, ip)
-values ($1, $2)
-returning id, tag, ip, created_at`;
+insert into portfolio.session(tag, ip, device)
+values ($1, $2, $3)
+returning id, tag, ip, device, created_at`;
 
 export interface CreateSessionArgs {
     tag: string | null;
     ip: string;
+    device: string;
 }
 
 export interface CreateSessionRow {
     id: string;
     tag: string | null;
     ip: string;
+    device: string;
     createdAt: Date;
 }
 
 export async function createSession(sql: Sql, args: CreateSessionArgs): Promise<CreateSessionRow | null> {
-    const rows = await sql.unsafe(createSessionQuery, [args.tag, args.ip]).values();
+    const rows = await sql.unsafe(createSessionQuery, [args.tag, args.ip, args.device]).values();
     if (rows.length !== 1) {
         return null;
     }
@@ -94,7 +101,8 @@ export async function createSession(sql: Sql, args: CreateSessionArgs): Promise<
         id: row[0],
         tag: row[1],
         ip: row[2],
-        createdAt: row[3]
+        device: row[3],
+        createdAt: row[4]
     };
 }
 

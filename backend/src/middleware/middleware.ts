@@ -53,7 +53,9 @@ export class SessionMiddleware {
 			request.headers.get('cf-connecting-ip') ||
 			'unknown';
 
-		const session = await this.sessionR.createSession(ip, tag);
+		const userAgent = c.req.header('user-agent') || ''
+
+		const session = await this.sessionR.createSession(ip, userAgent, tag);
 		if (session == null) {
 			throw InternalServerError();
 		}

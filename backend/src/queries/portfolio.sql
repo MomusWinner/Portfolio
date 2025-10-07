@@ -3,7 +3,7 @@
 ----------
 
 -- name: GetSessionsByID :one
-select s.id, s.tag, s.ip, s.created_at, tta.alias from portfolio.session s
+select s.id, s.tag, s.ip, s.device, s.created_at, tta.alias from portfolio.session s
 left join portfolio.tag_to_alias tta on s.tag = tta.tag
 where s.id = $1;
 
@@ -12,18 +12,19 @@ select
 	s.id,
 	s.tag,
 	s.ip,
+	s.device,
 	s.created_at,
 	tta.alias,
 	coalesce(sum(t.t_end - t.t_start), interval '0') as total_time
 from portfolio.session s
 left join portfolio.time_interval t on t.session_id = s.id
 left join portfolio.tag_to_alias tta on s.tag = tta.tag
-group by s.id, s.tag, s.ip, s.created_at, tta.alias
+group by s.id, s.tag, s.device, s.ip, s.created_at, tta.alias
 order by created_at desc;
 
 -- name: CreateSession :one
-insert into portfolio.session(tag, ip)
-values ($1, $2)
+insert into portfolio.session(tag, ip, device)
+values ($1, $2, $3)
 returning *;
 
 -- name: DeleteSession :exec
