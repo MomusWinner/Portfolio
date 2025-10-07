@@ -6,7 +6,7 @@ import {
   getAllSessions,
 } from "./../gen/sql/portfolio_sql";
 
-interface Session {
+export interface Session {
   id: string;
   tag: string | null;
   ip: string;
