@@ -1,19 +1,20 @@
 services:
   backend:
-    restart: unless-stopped
     build:
       context: ./backend
       dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
       - 127.0.0.1:4000:4000
-    volumes:
-      - ./:/usr/src/app
     depends_on:
       migrate:
         condition: service_completed_successfully
       database:
         condition: service_healthy
     environment:
+      TOKEN_LIFETIME: ${TOKEN_LIFETIME}
+      JWT_PRIVATE_KEY: ${JWT_PRIVATE_KEY}
+      JWT_PUBLIC_KEY: ${JWT_PUBLIC_KEY}
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS}
       DB_NAME: ${DB_NAME}
@@ -22,12 +23,10 @@ services:
       DB_SSL: ""
 
   frontend:
-    restart: unless-stopped
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    volumes:
-      - ./frontend/:/usr/src/app
+    restart: unless-stopped
     ports:
       - 127.0.0.1:3000:3000
 
