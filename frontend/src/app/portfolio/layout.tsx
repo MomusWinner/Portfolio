@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Roboto_Mono } from "next/font/google";
 import "../globals.css";
 import PhaserGame from "@/components/GameOfLifeWrapper";
@@ -16,25 +17,39 @@ export const metadata: Metadata = {
 	description: "Porfolio",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const h = await headers();
+	const userAgent = h.get("user-agent") || "";
+
+	const isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(userAgent);
+
 	return (
 		<html lang="ru">
 			<body
 				className={`${robotoMono.variable} antialiased bg-background-dark`}
 			>
-				<div className="absolute top-0 left-1/2 -translate-x-1/2 -z-11">
-					<PhaserGame />
-				</div>
-				<main className="relative max-w-5xl mx-auto p-6 md:p-12 space-y-12">
-					<div className="h-60"></div>
-					<div className="p-15 rounded-2xl shadow-xl/30 bg-background inset-0 -z-10">
-						{children}
-					</div>
-				</main>
+				{
+					isMobile ? <></> :
+						<div className="absolute top-0 left-1/2 -translate-x-1/2 -z-11">
+							<PhaserGame />
+						</div>
+				}
+
+				{
+					isMobile ?
+						<main className="p-[24px] bg-background text-sm">{children}</main>
+						:
+						<main className="relative max-w-5xl mx-auto p-6 md:p-12 space-y-12">
+							<div className="h-60"></div>
+							<div className="p-15 rounded-2xl shadow-xl/30 bg-background inset-0 -z-10">
+								{children}
+							</div>
+						</main>
+				}
 			</body>
 		</html >
 	);
