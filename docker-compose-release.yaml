@@ -53,7 +53,7 @@ services:
     command: ["-source=file://migrations", "-database",  "postgres://test:test@database:5432/test_db?sslmode=disable", "up"]
     restart: on-failure
     volumes:
-      - ./migrations:/migrations
+      - ./backend/migrations:/migrations
     depends_on:
       database:
         condition: service_healthy
