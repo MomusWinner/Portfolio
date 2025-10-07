@@ -42,11 +42,6 @@ const timeIntervalHander = new TimeIntervalHandler(analiticsRepo)
 
 const aliasHandler = new AliasHandler(analiticsRepo)
 
-const frontend = new Fronted(sessionMiddleware.handle(), authMiddleware.handle())
-const frontendApp = frontend.getApp()
-
-adminRepo.getAllAdmin()
-
 app.use(logger());
 app.route('/api/v1/session', addSessionRoutes(sesssionHandler, authMiddleware, sessionMiddleware))
 app.route('/api/v1/auth', addAuthRoutes(authHandler));

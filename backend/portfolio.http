@@ -95,7 +95,7 @@ Cookie: auth={{token}}
 
 ### Get by time interval by id
 
-GET {{httpUrl}}/api/v1/time_interval/{{timeIntervalId}} HTTP/1.1
+GET {{httpUrl}}/api/v1/time_interval/{{timeIntervalId}}  HTTP/1.1
 Cookie: auth={{token}}
 
 
@@ -127,7 +127,7 @@ Content-Type: application/json
 Cookie: session={{session}}
 
 {
-  "email": "areg@mail.ru",
+  "email": "areag@mail.ru",
   "password": "123"
 }
 
