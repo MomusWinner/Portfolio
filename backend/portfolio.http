@@ -1,21 +1,9 @@
 ### 
 
-##@baseUrl = localhost:7080
-@baseUrl = areg-kr.com:7080
+## @baseUrl = areg-kr.com:7080
+@baseUrl = localhost:7080
 @httpUrl = http://{{baseUrl}}
 @wsUrl = ws://{{baseUrl}}
-
-### 
-
-GET {{httpUrl}}/ HTTP/1.1
-Cookie: session={{session}}
-
-> {%
-  -- lua
-  client.global.session = response.cookies["session"].value
-	client.log(client.global.session)
-%}
-
 
 ### SESSION ##############################
 

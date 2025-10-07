@@ -10,6 +10,7 @@ import {
   getAllAliases,
   deleteAlias,
 } from "@/gen/sql/portfolio_sql";
+import { RepositoryError, processError, catchError } from "./errors";
 
 interface TimeInterval {
   id: string;
@@ -67,9 +68,8 @@ export class AnaliticsRepository {
     await deleteTimeInterval(this.sql, { id: id });
   }
 
-  async createAlias(tag: string, alias: string): Promise<Alias | null> {
-    let tagToAlias = await createAlias(this.sql, { tag: tag, alias: alias });
-    return tagToAlias;
+  async createAlias(tag: string, alias: string): Promise<[Alias | null, RepositoryError]> {
+    return catchError(() => createAlias(this.sql, { tag: tag, alias: alias }));
   }
 
   async getAllAliases(): Promise<Alias[]> {

@@ -1,6 +1,7 @@
 import { Context } from "hono";
 import { AnaliticsRepository } from "@/repository/analitics";
 import { EmptyParametrError } from "@/helpers/helper";
+import { RepositoryError } from "@/repository/errors";
 
 export class AliasHandler {
   analiticsR: AnaliticsRepository;
@@ -22,11 +23,15 @@ export class AliasHandler {
       let tag = body.tag;
       let alias = body.alias;
 
-      let r = await this.analiticsR.createAlias(tag, alias);
-      if (r) {
+      let [r, error] = await this.analiticsR.createAlias(tag, alias);
+      console.log(r);
+      console.log(error);
+      if (error === RepositoryError.None) {
         c.status(201);
+      } else if (error === RepositoryError.Conflict) {
+        c.status(409);
       } else {
-        return c.status(500);
+        c.status(500);
       }
 
       return c.json(r);

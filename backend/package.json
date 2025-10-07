@@ -4,6 +4,7 @@
     "dev": "bun run --hot src/main.ts"
   },
   "dependencies": {
+    "@hono/swagger-ui": "^0.5.2",
     "hono": "^4.9.6",
     "postgres": "^3.4.7",
     "uuid": "^13.0.0"

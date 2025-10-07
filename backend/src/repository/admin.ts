@@ -7,8 +7,9 @@ import {
   getAllAdmins,
   getAdminByEmail,
 } from "@/gen/sql/portfolio_sql";
-import { RepositoryError, processError } from "./errors";
+import { RepositoryError, processError, catchError } from "./errors";
 
+import { RepositoryError, processError, catchError } from "./errors";
 interface Admin {
   id: string;
   email: string;
@@ -24,13 +25,7 @@ export class AdminRepository {
   }
 
   async createAdmin(email: string, password: string): Promise<[Admin | null, RepositoryError]> {
-    var admin: CreateAdminRow | null;
-    try {
-      admin = await createAdmin(this.sql, { email: email, password: password });
-    } catch (error: unknown) {
-      return [null, processError(error)];
-    }
-    return [admin, RepositoryError.None];
+    return catchError(() => createAdmin(this.sql, { email: email, password: password }));
   }
 
   async getAdminByID(id: string): Promise<Admin | null> {

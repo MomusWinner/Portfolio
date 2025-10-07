@@ -18,6 +18,7 @@ import { TimeIntervalHandler } from "./api/v1/timeInterval/handler";
 import { addTimeIntervalRoutes } from "./api/v1/timeInterval/router";
 import { AliasHandler } from "./api/v1/alias/handler";
 import { addAliasRoutes } from "./api/v1/alias/router";
+import SwaggerApp from "./swagger";
 
 const app = createApp();
 
@@ -66,6 +67,7 @@ app.route("/api/v1/auth", addAuthRoutes(authHandler));
 app.route("/api/v1/analitics", addAnalicitcsRoutes(analitics, sessionMiddleware));
 app.route("/api/v1/time_interval", addTimeIntervalRoutes(timeIntervalHander, authMiddleware));
 app.route("/api/v1/alias", addAliasRoutes(aliasHandler, authMiddleware));
+app.route("/api/", SwaggerApp);
 
 export default {
   port: 4000,
