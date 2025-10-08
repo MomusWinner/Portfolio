@@ -10,7 +10,7 @@ const openApiDoc = {
   },
   servers: [
     { url: "http://localhost:7080", description: "Local server" },
-    { url: "http://info.areg-kr.com", description: "Production server" },
+    { url: "https://info.areg-kr.com", description: "Production server" },
   ],
   paths: {
     // -------- SESSION --------
