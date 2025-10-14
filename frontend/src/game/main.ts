@@ -10,6 +10,9 @@ const config: Phaser.Types.Core.GameConfig = {
   fps: { limit: 60 },
   backgroundColor: "#1b1c1c",
   scene: [Boot, MainGame],
+  audio: {
+    disableWebAudio: true,
+  },
 };
 
 const StartGame = (parent: string) => {
