@@ -10,6 +10,7 @@
   --background-dark: #1b1c1c;
 
   --foreground: #f0f6f0;
+  --foreground-s: #BBBDBB;
 
   --gray: #808080;
   --red: #b33831;
@@ -20,6 +21,7 @@
   --color-background: var(--background);
   --color-background-dark: var(--background-dark);
   --color-foreground: var(--foreground);
+  --color-foreground-s: var(--foreground-s);
   --color-m-red: var(--red);
   --color-m-green: var(--green);
   --color-m-gray: var(--gray);

@@ -2,24 +2,25 @@ import Image from "next/image";
 import PortfolioImage from "./PortfolioImage";
 import { Title1, Title2, Title3 } from "@/components/Title";
 import Info from "./Info";
+import Link from "next/link";
 
 export default function Portoflio() {
 	return (
 		<div className="font-mono flex flex-col gap-[32px] row-start-2 itmes-stretch w-full">
 			<Info />
-			<Title1 className="text-center w-full w-full h-full">Портфолио</Title1>
+			<Title1 className="text-center w-full w-full h-full">Опыт работы</Title1>
 			<p>
 				Всем привет, меня зовут Арег!
 				<br />
 				<br />
-				Я Unity-разработчик с более чем 3 годами коммерческого опыта. Специализируюсь на разработке
-				игровых механик, плагинов и внутренних инструментов. В процессе работы, помимо классической
-				игровой разработки, реализовывал сетевые решения и SDK для них.
+				Я Unity-разработчик с 3-летним опытом работы в филиале №11 ООО «ОЦРВ» (Сириус) в группе «Игровые технологии».
+				За это время я занимался разработкой и внедрением игровых механик, плагинов, сетевых решений и SDK. Основная работа велась на движке Unity, однако у меня также есть опыт разработки на других игровых движках.
+				Подробнее о проектах можно прочитать ниже.
 				<br />
 				<br />
-				Интересуюсь низкоуровневой графикой (Vulkan, OpenGL) и оптимизацией рендеринга. В свободное
-				от работы время пишу небольшой движок на Vulkan. Стремлюсь к глубокому пониманию работы
-				движков и созданию эффективных решений.
+				Помимо основной работы, интересуюсь низкоуровневой графикой (Vulkan, OpenGL) и оптимизацией рендеринга.
+				В свободное время разрабатываю собственный небольшой движок на Vulkan.
+				Стремлюсь к глубокому пониманию принципов работы игровых движков и созданию производительных решений.
 			</p>
 
 			<Title2>Проекты</Title2>
@@ -43,7 +44,12 @@ export default function Portoflio() {
 					<li>Взаимодействие мобильного веб-клиента (джойстика) и игры через WebSocket-сервер</li>
 					<li>Реализация Utility AI плагина для ИИ пассажиров</li>
 					<li>
-						Реализация игровых механик (передвижение пассажиров, генерация игровой карты и др.)
+						Реализация игровых механик
+						<ul className="list-disc pl-6 text-foreground-s">
+							<li>Передвижение пассажиров </li>
+							<li>Генерация игровой карты </li>
+							<li>и т. д.</li>
+						</ul >
 					</li>
 				</ul>
 				<br />
@@ -67,6 +73,7 @@ export default function Portoflio() {
 				<br />
 				Чтобы определить свою профессиональную пригодность, работники должны пройти серию мини-игр,
 				которые проверят их внимание, память, реакцию и другие важные навыки.
+				<br />
 			</p>
 			<PortfolioImage src="/project/GamePlatform.png" alt="Game Platform" />
 			<section>
@@ -74,21 +81,48 @@ export default function Portoflio() {
 					<b>Мои задачи:</b>
 				</p>
 				<ul className="list-disc pl-6">
-					<li>Разработка мини-игр для платформы</li>
-					<li>Написание SDK для взаимодействия игр и бэкенда</li>
 					<li>
-						Реализация игровых механик (передвижение пассажиров, генерация игровой карты и др.)
+						Ресёрч по игровым движкам
+						<br />
+						<span className="text-foreground-s">
+							Для этого проекта Unity не подходил по ряду пунктов, поэтому в результате обсуждения было принято решение использовать Defold
+						</span>
 					</li>
+					<li>
+						Написание SDK для взаимодействия игр c бэкенда <br />
+						<span className="text-foreground-s">
+							<ul className="list-disc pl-6">
+								<li>Запись результатов тестирования</li>
+								<li>Получение данных для настройки уровня сложности </li>
+								<li>Загрузка конфигурации игры</li>
+								<li>и т. д.</li>
+							</ul >
+						</span>
+					</li>
+					<li>Разработка мини-игры "Найди фигуру"</li>
+					<li>Написание серверной части</li>
 				</ul>
 				<br />
-				<p>
-					<b>Стек:</b>
-				</p>
+
+				<p><b>Стек:</b></p>
 				<ul className="list-disc pl-6">
-					<li>Defold / Lua (игровой движок)</li>
-					<li>Go + Fiber (бэкенд)</li>
-					<li>Redis</li>
-					<li>PostgreSQL</li>
+					<li>
+						<b>Игры</b>
+						<ul className="list-disc pl-6">
+							<li>Defold / Lua (игровой движок)</li>
+							<li>Druid (UI плагин для Defold)</li>
+						</ul>
+					</li>
+					<li>
+						<b>Backend</b>
+						<ul className="list-disc pl-6">
+							<li>Go + Fiber (бэкенд)</li>
+							<li>Redis</li>
+							<li>PostgreSQL</li>
+							<li>MinIO</li>
+							<li>Jenkins</li>
+						</ul>
+					</li>
 				</ul>
 			</section>
 
@@ -105,9 +139,17 @@ export default function Portoflio() {
 					<b>Мои задачи:</b>
 				</p>
 				<ul className="list-disc pl-6">
-					<li>Реализация игровых механик (система улучшений, система ивентов и др.)</li>
+					<li>
+						Реализация игровых механик
+						<ul className="list-disc pl-6 text-foreground-s">
+							<li>Прибыте/отбыте подездов</li>
+							<li>Cистема улучшений</li>
+							<li>Cистема ивентов</li>
+							<li>и др.</li>
+						</ul>
+					</li>
 					<li>ServiceLocator (Плагин)</li>
-					<li>Загрузка ресурсов(текстур, моделей, звуков) из хранилища S3.</li>
+					<li>Загрузка ресурсов(текстур, моделей, звуков) из хранилища S3 используя Addressables</li>
 					<li>Загрузка конфигураций из Google Таблиц</li>
 				</ul>
 				<br />
