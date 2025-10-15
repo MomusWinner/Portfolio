@@ -59,6 +59,7 @@ export default function Portoflio() {
 				<ul className="list-disc pl-6">
 					<li>Unity / C#</li>
 					<li>Entitas (ECS-фреймворк)</li>
+					<li>Unitask</li>
 					<li>UI Toolkit</li>
 					<li>websocket-sharp</li>
 				</ul>
@@ -142,7 +143,7 @@ export default function Portoflio() {
 					<li>
 						Реализация игровых механик
 						<ul className="list-disc pl-6 text-foreground-s">
-							<li>Прибыте/отбыте подездов</li>
+							<li>Прибытие /отбытие пoездов</li>
 							<li>Cистема улучшений</li>
 							<li>Cистема ивентов</li>
 							<li>и др.</li>
@@ -159,6 +160,7 @@ export default function Portoflio() {
 				<ul className="list-disc pl-6">
 					<li>Unity / C#</li>
 					<li>Addressables</li>
+					<li>Unitask</li>
 					<li>UI Toolkit</li>
 				</ul>
 			</section>
