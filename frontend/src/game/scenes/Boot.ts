@@ -1,4 +1,5 @@
 import { Scene } from "phaser";
+import { resize } from "@/game/utils";
 
 export class Boot extends Scene {
   constructor() {
@@ -10,6 +11,7 @@ export class Boot extends Scene {
   }
 
   create() {
+    resize(this.game);
     this.scene.start("Game");
   }
 }
